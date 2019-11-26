@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>dIMDB</h1>
+    <p class="lead">dIMDB es una base de datos de películas dominicanas</p>
+    <p><a href="/Peliculas/Index/" class="btn btn-primary btn-lg">Ver listado de Películas &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Actores</h2>
+        <p>
+            Editar actores de la base de datos.
+        </p>
+        <p>
+            @Html.ActionLink("Actores", "Index", "Actores", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Guionistas</h2>
+        <p>Editar los guionistas de la base de datos.</p>
+        <p>
+            @Html.ActionLink("Guionistas", "Index", "Guionistas", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Películas</h2>
+        <p>Editar las películas de la base de datos</p>
+        <p>
+            @Html.ActionLink("Peliculas", "Index", "Peliculas", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model dIMDB.Models.Peliculas
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><br />
+
+<div>
+    <div class="container">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="media">
+                    <a href="#" class="media-left">
+                        <img class="media-object" src="@Model.RutaCaratula" alt="@Model.Nombre" style="height: 210px;" />
+                    </a>
+                    <div class="media-right">
+                        <h1 class="media-heading">@Model.Nombre</h1>
+                        <h4>@Model.Anio</h4>
+                        <br /><br />
+                        <strong>Sinopsis: </strong>@Model.Sinopsis
+                        <br /><br />
+                        <strong>Dirigida por: </strong><a href="/Directores/Details/@Model.IDDirector">@Model.Directores.Nombre</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+        </div>
+</div>
+<hr />
+@Html.Action("_ActoresPeliculas", new { id = Model.IDPelicula })
+<p>
+    <i class="fa fa-pencil"></i>&nbsp;
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDPelicula }) |
+    <i class="fa fa-chevron-left"></i>&nbsp;
+    @Html.ActionLink("Back to List", "Index")
+</p>

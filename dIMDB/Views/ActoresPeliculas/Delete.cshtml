@@ -1,0 +1,39 @@
+﻿@model dIMDB.Models.ActoresPeliculas
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eliminar Actor</h2>
+
+<h3>¿Está seguro de eliminar este actor de la película?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Peliculas.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Peliculas.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Actores.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actores.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a href="/Peliculas/Edit/@Model.IDPelicula">Volver a la película</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<dIMDB.Models.Actores>
+
+<div class="col-md-10">
+    <label class="control-label col-md-2">Agregar Actor:</label>
+    <select id="selActores" class="form-control">
+        @foreach(var item in Model)
+        {
+            <option value="@item.IDActor">@item.Nombre</option>
+        }
+    </select>
+    <input type="button" id="btnAddActor" value="Agregar" class="btn btn-default customButton" />
+</div>

@@ -1,0 +1,51 @@
+﻿@model dIMDB.Models.Bitacora
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Bitacora</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IPAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IPAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActionName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDBitacora }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

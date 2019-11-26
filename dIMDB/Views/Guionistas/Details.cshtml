@@ -1,0 +1,43 @@
+﻿@model dIMDB.Models.Gionistas
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Gionistas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LugarNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LugarNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDGuionista }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

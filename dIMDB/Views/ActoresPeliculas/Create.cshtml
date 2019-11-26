@@ -1,0 +1,38 @@
+﻿@model dIMDB.Models.ActoresPeliculas
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Agregar actor para la película "@ViewBag.NombrePelicula"</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDActor, "IDActor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDActor", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDActor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <a href="/Actores/Create">Crear nuevo actor...</a>
+
+        @Html.HiddenFor(model => model.IDPelicula, new { value = ViewBag.IDPelicula })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Agregar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @*@Html.ActionLink("Volver a '" + (string)ViewBag.NombrePelicula + "'", "Edit", "Peliculas", null, null, null, new { id = ViewBag.IDPelicula }, null)*@
+    <a href="/Peliculas/Edit/@ViewBag.IDPelicula">Volver a la película</a>
+</div>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<dIMDB.Models.Peliculas>
+
+@{
+    ViewBag.Title = "Película";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Películas</h2>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        <i class="fa fa-plus"></i>
+        @Html.ActionLink("Nueva Película", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sinopsis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Anio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDDirector)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDGenero)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sinopsis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Anio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Directores.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Generos.Nombre)
+        </td>
+        <td style="width: 10%">
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Edit", "Peliculas", new { id = @item.IDPelicula })" class="imageLink">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+            <a href="@Url.Action("Details", "Peliculas", new { id = @item.IDPelicula })" class="imageLink">
+                <i class="fa fa-info-circle"></i>
+            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Delete", "Peliculas", new { id = @item.IDPelicula })" class="imageLink">
+                    <i class="fa fa-times"></i>
+                </a>
+            }
+                        @*
+        @Html.ActionLink("Modificar", "Edit", new { id=item.IDPelicula }) |
+        @Html.ActionLink("Detalles", "Details", new { id=item.IDPelicula }) |
+        @Html.ActionLink("Eliminar", "Delete", new { id=item.IDPelicula })
+                        *@
+
+        </td>
+    </tr>
+}
+
+</table>

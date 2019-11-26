@@ -1,0 +1,36 @@
+﻿@model IEnumerable<dIMDB.Models.ActoresPeliculas>
+
+<hr />
+<h4>Reparto:</h4>
+<table class="table" id="tblActores">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Actores.Nombre)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="2">
+                <div class="alert alert-danger">No existen actores definidos para esta película</div>
+            </td>
+        </tr>
+    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Actores.Nombre)
+        </td>
+        <td>
+            <i class="fa fa-times"></i>&nbsp;
+            <a href="javascript:EliminarActor(@item.IDActor)">Eliminar Actor</a>
+        </td>
+    </tr>
+}
+
+    @*@Html.ActionLink("Eliminar Actor", "Delete", new { id=item.IDActorPelicula })*@
+    @*
+        <a href="/ActoresPeliculas/Delete/@item.IDActorPelicula">Eliminar Actor</a>
+    *@
+</table>

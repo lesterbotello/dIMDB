@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if(Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hola, " + User.Identity.GetUserName() + "!", "Index", "Home", new { area = "" }, htmlAttributes: new { title = "Inicio"})
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesión</a>
+            </li>
+        </ul> 
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Registrarme", "Register", "Account", routeValues: new { area = ""}, htmlAttributes: new { title = "Registrarme"})
+        </li>
+        <li>
+            @Html.ActionLink("Iniciar Sesion", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { title = "Iniciar Sesion" })
+        </li>
+    </ul>
+}

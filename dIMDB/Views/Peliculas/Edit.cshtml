@@ -1,0 +1,148 @@
+﻿@model dIMDB.Models.Peliculas
+
+@{
+    ViewBag.Title = "Editar Película";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Editar Película</h2>
+
+@using (Html.BeginForm("Edit", "Peliculas", FormMethod.Post, new { enctype = "multipart/form-data" } ))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@Model.Nombre</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDPelicula)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sinopsis, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sinopsis, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sinopsis, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDDirector, "Director", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDDirector", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDDirector, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Anio, "Año", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Anio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Anio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RutaCaratula, "Póster", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RutaCaratula, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="file" name="uploadPic" />
+                @Html.ValidationMessageFor(model => model.RutaCaratula, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RutaTrailer, "Trailer", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RutaTrailer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RutaTrailer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDGenero, "Género", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDGenero", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDGenero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            @Html.Action("_AgregarActor", new { id = Model.IDPelicula })
+            @Html.Action("_ActoresPeliculas", new { id = Model.IDPelicula })
+            @*
+                <i class="fa fa-plus"></i>
+                <a href="/ActoresPeliculas/Create?peliculaID=@Model.IDPelicula">Agregar actor...</a>
+            *@
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default customButton" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <i class="fa fa-chevron-left"></i>&nbsp;
+    @Html.ActionLink("Volver al listado", "Index")
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $("#btnAddActor").click(function () {
+            var idPelicula = $("#IDPelicula").val();
+            var idActor = $("#selActores").val();
+            var params = { IDPelicula: idPelicula, IDActor: idActor };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Peliculas/AgregarActor',
+                content: "application/json; charset=utf-8",
+                data: params,
+                success: function (d) {
+                    var html = "<tr>";
+                    html += "<td>" + d[0].Nombre + "</td>";
+                    html += "<td><i class=\"fa fa-times\"></i>&nbsp;<a href=\"javascript:EliminarActor(" + d[0].IDActor + ")\">Eliminar Actor</a></td>";
+                    html += "</tr>";
+
+                    $("#tblActores tr:last").after(html);
+                    $("#selActores option:selected").remove();
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+        function EliminarActor(idActor) {
+            if (confirm("¿Está seguro de eliminar este actor de esta película?")) {
+                var idPelicula = $("#IDPelicula").val();
+                var params = { IDPelicula: idPelicula, IDActor: idActor };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Peliculas/EliminarActor',
+                    content: "application/json; charset=utf-8",
+                    data: params,
+                    success: function (d) {
+                        $("#tblActores tr:contains('" + d[0].Nombre + "')").remove();
+                        $("#selActores").append($("<option>", { value: d[0].IDActor, text: d[0].Nombre }));
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        }
+    </script>
+}
